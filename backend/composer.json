@@ -1,0 +1,19 @@
+{
+    "name": "illea/backend",
+    "type": "project",
+    "require": {
+        "laravel/pint": "^1.20"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kernel\\Backend\\": "src/core/",
+            "Backend\\": "src/app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Smakouz Illea",
+            "email": "illeasmakouz@gmail.com"
+        }
+    ]
+}
