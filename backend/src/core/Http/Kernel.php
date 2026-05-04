@@ -24,7 +24,10 @@ readonly class Kernel
             $router->dispatch($routes, $requestInfo, $this->request, $this->response);
 
         } catch (Exception $e) {
-            $this->response->send($e->getMessage(), $e->getCode());
+            $code = $e->getCode();
+            $statusCode = $code >= 400 && $code < 600 ? $code : 500;
+
+            $this->response->send(['error' => $e->getMessage()], $statusCode);
         }
         ob_end_flush();
     }

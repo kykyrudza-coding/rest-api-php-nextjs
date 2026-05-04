@@ -5,9 +5,13 @@ namespace Kernel\Backend\Http;
 class Request
 {
     private array $getData;
+
     private array $postParam;
+
     private array $files;
+
     private array $server;
+
     private array $queryParams = [];
 
     public function __construct(array $getData = [], array $postParam = [], array $files = [], array $server = [])
@@ -37,9 +41,17 @@ class Request
         return $this->server['REQUEST_URI'] ?? '';
     }
 
+    public function path(): string
+    {
+        $path = parse_url($this->uri(), PHP_URL_PATH) ?: '/';
+        $path = '/'.trim($path, '/');
+
+        return $path === '/' ? '/' : rtrim($path, '/');
+    }
+
     public function method(): string
     {
-        return $this->server['REQUEST_METHOD'] ?? 'GET';
+        return strtoupper($this->server['REQUEST_METHOD'] ?? 'GET');
     }
 
     public function getQueryParams(): array
@@ -56,6 +68,7 @@ class Request
     {
         $query = $this->server['QUERY_STRING'] ?? '';
         parse_str($query, $queryParams);
+
         return $queryParams;
     }
 }
